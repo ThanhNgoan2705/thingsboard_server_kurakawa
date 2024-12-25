@@ -31,6 +31,7 @@
       .forgot-password {
         padding: 0 0.5em 1em;
         .tb-reset-password {
+          color: #0F161D;
           padding: 0 6px;
         }
       }
@@ -38,6 +39,9 @@
       .tb-action-button{
         padding: 20px 0 16px;
       }
+    }
+    .mdc-text-field__input {
+      color: rgba(black, 0.87);
     }
 
     .oauth-container{

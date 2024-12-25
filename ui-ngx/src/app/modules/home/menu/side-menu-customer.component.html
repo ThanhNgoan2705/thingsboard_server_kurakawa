@@ -1,0 +1,8 @@
+<ul class="tb-side-menu flex flex-col items-stretch justify-start">
+  <tb-dashboard-select class="tb-dashboard-select  text-lg font-bold"
+                       [(ngModel)]="currentDashboardId"
+                       (ngModelChange)="currentDashboardIdChanged(currentDashboardId)"
+                       [customerId]="currentCustomerId"
+                       [dashboardsScope]="currentDashboardScope">
+  </tb-dashboard-select>
+</ul>

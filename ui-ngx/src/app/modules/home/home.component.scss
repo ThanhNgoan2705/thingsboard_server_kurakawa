@@ -19,6 +19,7 @@
   height: 100%;
 
   mat-sidenav-container {
+
     flex: 1;
   }
   mat-sidenav.tb-site-sidenav {
@@ -66,5 +67,10 @@
   .tb-main-content {
     overflow: auto;
     position: relative;
+  }
+}
+:host ::ng-deep {
+  .mat-toolbar{
+    color: white;
   }
 }

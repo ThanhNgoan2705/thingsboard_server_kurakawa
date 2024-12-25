@@ -676,7 +676,8 @@ export function MarkedOptionsFactory(markedOptionsService: MarkedOptionsService)
     EmbedImageDialogComponent,
     ImageGalleryDialogComponent,
     WidgetButtonComponent,
-    ScadaSymbolInputComponent
+    ScadaSymbolInputComponent,
+    DashboardSelectPanelComponent
   ]
 })
 export class SharedModule { }

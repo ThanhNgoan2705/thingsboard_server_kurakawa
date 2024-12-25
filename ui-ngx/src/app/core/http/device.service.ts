@@ -219,4 +219,5 @@ export class DeviceService {
   public downloadGatewayDockerComposeFile(deviceId: string): Observable<any> {
     return this.resourcesService.downloadResource(`/api/device-connectivity/gateway-launch/${deviceId}/docker-compose/download`);
   }
+  
 }

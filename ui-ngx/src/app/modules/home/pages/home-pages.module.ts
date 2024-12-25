@@ -45,6 +45,7 @@ import { NotificationModule } from '@home/pages/notification/notification.module
 import { AccountModule } from '@home/pages/account/account.module';
 import { ScadaSymbolModule } from '@home/pages/scada-symbol/scada-symbol.module';
 import { GatewaysModule } from '@home/pages/gateways/gateways.module';
+import {DeveloperModule} from "@home/pages/developer/developer.module";
 
 @NgModule({
   exports: [
@@ -76,7 +77,8 @@ import { GatewaysModule } from '@home/pages/gateways/gateways.module';
     UserModule,
     VcModule,
     AccountModule,
-    ScadaSymbolModule
+    ScadaSymbolModule,
+    DeveloperModule
   ]
 })
 export class HomePagesModule { }

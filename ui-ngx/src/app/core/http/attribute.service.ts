@@ -154,10 +154,36 @@ export class AttributeService {
     if (isDefinedAndNotNull(useStrictDataTypes)) {
       url += `&useStrictDataTypes=${useStrictDataTypes}`;
     }
-
     return this.http.get<TimeseriesData>(url, defaultHttpOptionsFromConfig(config));
   }
-
+  public exportEntityTimeseriestoCsvFile( entityId: EntityId, keys: Array<string>, startTs: number, endTs: number){
+    let data = this.getEntityTimeseries(entityId, keys, startTs, endTs, 1000, AggregationType.NONE, null, DataSortOrder.DESC, false);
+    let csvData = [];
+    data.subscribe(
+      (res) => {
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "timestamp,";
+        keys.forEach((key) => {
+          csvContent += key + ",";
+        });
+        csvContent += "\n";
+        // @ts-ignore
+        res.forEach((row) => {
+          csvContent += row.ts + ",";
+          keys.forEach((key) => {
+            csvContent += row[key] + ",";
+          });
+          csvContent += "\n";
+        });
+        let encodedUri = encodeURI(csvContent);
+        let link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "exportedData.csv");
+        document.body.appendChild(link);
+        link.click();
+      }
+    );
+  }
   public getEntityTimeseriesLatest(entityId: EntityId, keys?: Array<string>,
                                    useStrictDataTypes = false, config?: RequestConfig): Observable<TimeseriesData> {
     let url = `/api/plugins/telemetry/${entityId.entityType}/${entityId.id}/values/timeseries?useStrictDataTypes=${useStrictDataTypes}`;

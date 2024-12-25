@@ -21,7 +21,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  QueryList,
+  QueryList, viewChild,
   ViewChild,
   ViewChildren
 } from '@angular/core';
@@ -48,6 +48,9 @@ import { Direction, SortOrder } from '@shared/models/page/sort-order';
 import { MatSort } from '@angular/material/sort';
 import { DashboardInfo } from '@shared/models/dashboard.models';
 import { DashboardAutocompleteComponent } from '@shared/components/dashboard-autocomplete.component';
+import {DashboardSelectComponent} from "@shared/components/dashboard-select.component";
+import {DashboardService} from "@core/http/dashboard.service";
+import {DashboardPageScope} from "@home/components/dashboard-page/dashboard-page.models";
 
 @Component({
   selector: 'tb-recent-dashboards-widget',
@@ -61,22 +64,28 @@ export class RecentDashboardsWidgetComponent extends PageComponent implements On
 
   @ViewChildren(MatSort) lastVisitedDashboardsSort: QueryList<MatSort>;
 
+
   @ViewChild('starDashboardAutocomplete', {static: false})
   starDashboardAutocomplete: DashboardAutocompleteComponent;
+  dashboardSelectComponent: DashboardSelectComponent;
 
   authority = Authority;
-
   userDashboardsInfo: UserDashboardsInfo;
+  dashboardService: DashboardService;
   authUser = getCurrentAuthUser(this.store);
+
 
   toggleValue: 'last' | 'starred' = 'last';
 
   lastVisitedDashboardsColumns = ['starred', 'title', 'lastVisited'];
   lastVisitedDashboardsDataSource: LastVisitedDashboardsDataSource;
   lastVisitedDashboardsPageLink: PageLink;
-
   starredDashboardValue = null;
   hasDashboardsAccess = true;
+
+  currentDashboardId: string;
+  currentCustomerId: string;
+  currentDashboardScope: DashboardPageScope;
 
   dirty = false;
   public customerId: string;
@@ -89,14 +98,18 @@ export class RecentDashboardsWidgetComponent extends PageComponent implements On
   }
 
   ngOnInit() {
+
     if (this.authUser.authority === Authority.CUSTOMER_USER) {
       this.customerId = this.authUser.customerId;
+      this.dashboardSelectComponent.dashboardsScope = 'customer';
     }
     this.hasDashboardsAccess = [Authority.TENANT_ADMIN, Authority.CUSTOMER_USER].includes(this.authUser.authority);
+    this.currentDashboardScope = this.authUser.authority === Authority.TENANT_ADMIN ? 'tenant' : 'customer';
     if (this.hasDashboardsAccess) {
       this.reload();
     }
   }
+
 
   reload() {
     this.userDashboardsInfo = null;
@@ -143,7 +156,6 @@ export class RecentDashboardsWidgetComponent extends PageComponent implements On
     this.lastVisitedDashboardsPageLink = new PageLink(MAX_SAFE_PAGE_SIZE, 0, null, sortOrder);
     this.lastVisitedDashboardsDataSource.loadData(this.lastVisitedDashboardsPageLink);
   }
-
   ngAfterViewInit() {
     this.lastVisitedDashboardsSort.changes.subscribe(() => {
       if (this.lastVisitedDashboardsSort.length) {
@@ -194,6 +206,8 @@ export class RecentDashboardsWidgetComponent extends PageComponent implements On
       this.cd.markForCheck();
     }
   }
+
+
 
 }
 

@@ -25,21 +25,27 @@ import { MenuToggleComponent } from '@modules/home/menu/menu-toggle.component';
 import { SideMenuComponent } from '@modules/home/menu/side-menu.component';
 import { NotificationBellComponent } from '@home/components/notification/notification-bell.component';
 import { ShowNotificationPopoverComponent } from '@home/components/notification/show-notification-popover.component';
+import {DeveloperComponent} from "@home/pages/developer/developer.component";
+import {WidgetComponentsModule} from "@home/components/widget/widget-components.module";
+import {SideMenuCustomerComponent} from "@home/menu/side-menu-customer.component";
 
 @NgModule({
   declarations:
     [
-      HomeComponent,
+ HomeComponent,
       MenuLinkComponent,
       MenuToggleComponent,
       SideMenuComponent,
       NotificationBellComponent,
-      ShowNotificationPopoverComponent
+      ShowNotificationPopoverComponent,
+      DeveloperComponent
     ],
   imports: [
     CommonModule,
     SharedModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    WidgetComponentsModule,
+    SideMenuCustomerComponent,
   ]
 })
 export class HomeModule { }

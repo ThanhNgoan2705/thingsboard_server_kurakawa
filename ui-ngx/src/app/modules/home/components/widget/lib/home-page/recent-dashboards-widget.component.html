@@ -26,6 +26,13 @@
         </tb-toggle-header>
         <a *ngIf="authUser.authority === authority.TENANT_ADMIN" class="md:!hidden"
            mat-flat-button color="primary" routerLink="/dashboards" [queryParams]="{action: 'add'}">{{ 'dashboard.add' | translate }}</a>
+        <div class="flex flex-row items-center justify-start gap-2 lt-md:items-center lt-md:justify-between">
+          <tb-dashboard-select
+                               [(ngModel)]="currentDashboardId"
+                               [customerId]="currentCustomerId"
+                               [dashboardsScope]="currentDashboardScope">
+          </tb-dashboard-select>
+        </div>
       </div>
     </div>
     <ng-container *ngIf="userDashboardsInfo; else loading" [ngSwitch]="dashboardsToggle.value">

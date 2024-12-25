@@ -24,6 +24,7 @@
             matTooltipPosition="below"
             (click)="onTriggerClick()">
       <mat-icon>more_horiz</mat-icon>
+      <mat-icon *ngIf="toolbarOpened">close</mat-icon>
     </button>
   </mat-fab-trigger>
   <mat-toolbar color="primary">

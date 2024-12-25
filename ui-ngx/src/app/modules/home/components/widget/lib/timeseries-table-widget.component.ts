@@ -94,6 +94,7 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { FormBuilder } from '@angular/forms';
 import { DEFAULT_OVERLAY_POSITIONS } from '@shared/models/overlay.models';
 import { DateFormatSettings } from '@shared/models/widget-settings.models';
+import { entityExportDataToJsonString } from '@app/shared/models/vc.models';
 
 export interface TimeseriesTableWidgetSettings extends TableWidgetSettings {
   showTimestamp: boolean;
@@ -422,6 +423,27 @@ export class TimeseriesTableWidgetComponent extends PageComponent implements OnI
       });
     }
     this.updateActiveEntityInfo();
+  }
+  public entityExportDataToCSV() {
+    const source = this.sources[this.sourceIndex];
+    const data = source.data;
+    const header = ['Timestamp'];
+    source.header.forEach(headerInfo => {
+      if (headerInfo.show) {
+        header.push(headerInfo.dataKey.label);
+      }
+    });
+    const rows = data.map(row => {
+      const rowData = [row.formattedTs];
+      source.header.forEach(headerInfo => {
+        if (headerInfo.show) {
+          rowData.push(row[headerInfo.index]);
+        }
+      });
+      return rowData;
+    });
+    const csv = [header, ...rows].map(row => row.map(value => `"${value}"`).join(',')).join('\n');
+    return csv;
   }
 
   private editColumnsToDisplay($event: Event) {

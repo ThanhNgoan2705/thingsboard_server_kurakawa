@@ -34,6 +34,7 @@ import { RouterTabsComponent } from '@home/components/router-tabs.component';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { isDefined, isDefinedAndNotNull } from '@core/utils';
+import {Authority} from "@shared/models/authority.enum";
 
 @Component({
   selector: 'tb-home',
@@ -45,14 +46,17 @@ export class HomeComponent extends PageComponent implements AfterViewInit, OnIni
   authState: AuthState = getCurrentAuthState(this.store);
 
   forceFullscreen = this.authState.forceFullscreen;
-
+ showSideNav = this.authState.authUser.authority !== Authority.CUSTOMER_USER;
   activeComponent: any;
   searchableComponent: ISearchableComponent;
 
   sidenavMode: 'over' | 'push' | 'side' = 'side';
   sidenavOpened = true;
+ isCustomer(){
+    return  this.authState.authUser.authority !== Authority.CUSTOMER_USER;
+  }
 
-  logo = 'assets/logo_title_white.svg';
+  logo = 'assets/factoryLog.png';
 
   @ViewChild('sidenav')
   sidenav: MatSidenav;

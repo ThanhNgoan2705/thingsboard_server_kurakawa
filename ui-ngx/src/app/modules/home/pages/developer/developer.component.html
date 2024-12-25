@@ -1,0 +1,10 @@
+<mat-toolbar color="primary"  class="rounded mt-1 mx-1.5 ">
+  <span class="flex text-center " >Developer</span>
+  <div class="select-container">
+    <tb-dashboard-select class="ms-2 text-white text-xl font-bold dashboard-select"
+    [(ngModel)]="currentDashboardId"
+    [customerId]="currentCustomerId"
+    [dashboardsScope]="currentDashboardScope">
+  </tb-dashboard-select>
+  </div>
+</mat-toolbar>

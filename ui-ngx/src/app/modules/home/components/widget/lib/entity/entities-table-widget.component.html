@@ -39,15 +39,19 @@
     </mat-toolbar>
     <div class="table-container flex-1">
       <table mat-table [dataSource]="entityDatasource" [trackBy]="trackByEntityId"
-                 matSort [matSortActive]="sortOrderProperty" [matSortDirection]="pageLinkSortDirection()" matSortDisableClear>
-        <ng-container [matColumnDef]="column.def" *ngFor="let column of columns; let $index = index; trackBy: trackByColumnDef;">
-          <mat-header-cell [style]="headerStyle(column)" *matHeaderCellDef mat-sort-header [disabled]="!column.sortable"> {{ column.title }} </mat-header-cell>
-            <mat-cell *matCellDef="let entity; let row = index"
-                      [innerHTML]="cellContent(entity, column, row)"
-                      [style]="cellStyle(entity, column, row)"
-                      (click)="onCellClick($event, entity, column, $index)"
-                      [class.tb-pointer]="columnHasCellClick($index)">
-            </mat-cell>
+             matSort [matSortActive]="sortOrderProperty" [matSortDirection]="pageLinkSortDirection()"
+             matSortDisableClear>
+        <ng-container [matColumnDef]="column.def"
+                      *ngFor="let column of columns; let $index = index; trackBy: trackByColumnDef;">
+          <mat-header-cell [style]="headerStyle(column)" *matHeaderCellDef mat-sort-header
+                           [disabled]="!column.sortable"> {{ column.title }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let entity; let row = index"
+                    [innerHTML]="cellContent(entity, column, row)"
+                    [style]="cellStyle(entity, column, row)"
+                    (click)="onCellClick($event, entity, column, $index)"
+                    [class.tb-pointer]="columnHasCellClick($index)">
+          </mat-cell>
         </ng-container>
         <ng-container matColumnDef="actions" [stickyEnd]="enableStickyAction">
           <mat-header-cell *matHeaderCellDef>
@@ -61,31 +65,35 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let entity; let row = index" [style]="rowStyle(entity, row)">
             <ng-container *ngIf="entityDatasource.countCellButtonAction">
-              <div [class.lt-lg:!hidden]="showCellActionsMenu && entityDatasource.countCellButtonAction !== 1" class="flex flex-row items-stretch justify-end"
+              <div [class.lt-lg:!hidden]="showCellActionsMenu && entityDatasource.countCellButtonAction !== 1"
+                   class="flex flex-row items-stretch justify-end"
                    [style.min-width]="(entityDatasource.countCellButtonAction * 48) + 'px'">
-                <ng-container *ngFor="let actionDescriptor of entity.actionCellButtons; trackBy: trackByActionCellDescriptionId">
+                <ng-container
+                  *ngFor="let actionDescriptor of entity.actionCellButtons; trackBy: trackByActionCellDescriptionId">
                   <span *ngIf="!actionDescriptor.icon" style="width: 48px;"></span>
                   <button mat-icon-button [disabled]="isLoading$ | async"
                           *ngIf="actionDescriptor.icon"
                           matTooltip="{{ actionDescriptor.displayName }}"
                           matTooltipPosition="above"
                           (click)="onActionButtonClick($event, entity, actionDescriptor)">
-                    <tb-icon>{{actionDescriptor.icon}}</tb-icon>
+                    <tb-icon>{{ actionDescriptor.icon }}</tb-icon>
                   </button>
                 </ng-container>
               </div>
-              <div [class.!hidden]="!showCellActionsMenu || entityDatasource.countCellButtonAction === 1" class="gt-md:!hidden" *ngIf="entity.hasActions">
+              <div [class.!hidden]="!showCellActionsMenu || entityDatasource.countCellButtonAction === 1"
+                   class="gt-md:!hidden" *ngIf="entity.hasActions">
                 <button mat-icon-button
                         (click)="$event.stopPropagation(); ctx.detectChanges();"
                         [matMenuTriggerFor]="cellActionsMenu">
                   <mat-icon class="material-icons">more_vert</mat-icon>
                 </button>
                 <mat-menu #cellActionsMenu="matMenu" xPosition="before">
-                  <ng-container *ngFor="let actionDescriptor of entity.actionCellButtons; trackBy: trackByActionCellDescriptionId">
+                  <ng-container
+                    *ngFor="let actionDescriptor of entity.actionCellButtons; trackBy: trackByActionCellDescriptionId">
                     <button mat-menu-item *ngIf="actionDescriptor.icon"
                             [disabled]="isLoading$ | async"
                             (click)="onActionButtonClick($event, entity, actionDescriptor)">
-                      <tb-icon matMenuItemIcon>{{actionDescriptor.icon}}</tb-icon>
+                      <tb-icon matMenuItemIcon>{{ actionDescriptor.icon }}</tb-icon>
                       <span>{{ actionDescriptor.displayName }}</span>
                     </button>
                   </ng-container>

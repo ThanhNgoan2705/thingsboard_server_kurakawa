@@ -56,6 +56,7 @@ export class DashboardService {
       defaultHttpOptionsFromConfig(config));
   }
 
+
   public getTenantDashboardsByTenantId(tenantId: string, pageLink: PageLink,
                                        config?: RequestConfig): Observable<PageData<DashboardInfo>> {
     return this.http.get<PageData<DashboardInfo>>(`/api/tenant/${tenantId}/dashboards${pageLink.toQuery()}`,

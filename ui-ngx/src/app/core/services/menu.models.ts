@@ -50,6 +50,7 @@ export interface HomeSection {
 
 export enum MenuId {
   home = 'home',
+  developers = 'developers',
   tenants = 'tenants',
   tenant_profiles = 'tenant_profiles',
   resources = 'resources',
@@ -115,6 +116,16 @@ export const menuSectionMap = new Map<MenuId, MenuSection>([
       type: 'link',
       path: '/home',
       icon: 'home'
+    }
+  ],
+  [
+    MenuId.developers,
+    {
+      id: MenuId.developers,
+      name: 'developer.developers',
+      type: 'link',
+      path: '/developers',
+      icon: 'code'
     }
   ],
   [
@@ -809,24 +820,8 @@ const defaultUserMenuMap = new Map<Authority, MenuReference[]>([
   [
     Authority.CUSTOMER_USER,
     [
-      {id: MenuId.home},
-      {id: MenuId.alarms},
-      {id: MenuId.dashboards},
-      {
-        id: MenuId.entities,
-        pages: [
-          {id: MenuId.devices},
-          {id: MenuId.assets},
-          {id: MenuId.entity_views}
-        ]
+      {id: MenuId.home,
       },
-      {id: MenuId.edge_instances},
-      {
-        id: MenuId.notifications_center,
-        pages: [
-          {id: MenuId.notification_inbox}
-        ]
-      }
     ]
   ]
 ]);
@@ -882,6 +877,7 @@ const defaultHomeSectionMap = new Map<Authority, HomeSectionReference[]>([
         name: 'dashboard.management',
         places: [MenuId.widget_library, MenuId.dashboards]
       },
+
       {
         name: 'version-control.management',
         places: [MenuId.version_control]
@@ -893,6 +889,10 @@ const defaultHomeSectionMap = new Map<Authority, HomeSectionReference[]>([
       {
         name: 'admin.system-settings',
         places: [MenuId.home_settings, MenuId.resources_library, MenuId.repository_settings, MenuId.auto_commit_settings]
+      },
+      {
+        name: 'developer.management',
+        places: [MenuId.developers]
       }
     ]
   ],
