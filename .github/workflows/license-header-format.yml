@@ -50,5 +50,9 @@ jobs:
           git config user.email "noreply@thingsboard.io"
 
       - name: Check and push changes
+        env:
+          PAT: ${{ secrets.PAT }}
         run: |
+          git remote set-url origin https://thanhNgoan2705:${{ secrets.PAT }}@github.com/ThanhNgoan2705/kurakawa_thingsboard.git
+          git add .
           git diff --exit-code || git commit -am "License header format" && git push
